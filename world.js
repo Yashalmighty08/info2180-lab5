@@ -1,11 +1,15 @@
 document.addEventListener("DOMContentLoaded", function (){
     const countryInput = document.getElementById("country");
     const result = document.getElementById("result");
-
-    document.getElementById("lookup").addEventListener("click", function () {
-        const country = countryInput.value.trim();
-
-        fetch("world.php?country=" + encodeURIComponent(country))
+    
+    function search(lookup) {
+            const country = countryInput.value.trim();
+            let url = "world.php?country=" + encodeURIComponent(country);
+            if (lookup) {
+                url += "&lookup=" + lookup;
+            }
+            
+            fetch(url)
             .then(response => {
                 if (!response.ok) {
                     throw new Error("Request failed: " + response.status);
@@ -18,6 +22,13 @@ document.addEventListener("DOMContentLoaded", function (){
             .catch(error => {
                 result.textContent = "Something went wrong: " + error.message;
             });
+        }
 
-    });
+        document.getElementById("lookup").addEventListener("click", function () {
+            search("");
+        });
+
+        document.getElementById("lookup-cities").addEventListener("click", function () {
+            search("cities");
+        });
 });
