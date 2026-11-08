@@ -10,14 +10,32 @@ $stmt = $conn->query("SELECT * FROM countries");
 $country = isset($_GET['country']) ? trim($_GET['country']) : '';
 $like = '%' . $country . '%';
 
-$stmt = $conn->prepare("SELECT * FROM countries WHERE name LIKE :country");
+$stmt = $conn->prepare("SELECT name, continent, independence_year, head_of_state
+FROM countries WHERE name LIKE :country
+ORDER BY name"
+);
 $stmt->bindParam(':country', $like);
 $stmt->execute();
 
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-<ul>
-<?php foreach ($results as $row): ?>
-  <li><?= $row['name'] . ' is ruled by ' . $row['head_of_state']; ?></li>
-<?php endforeach; ?>
-</ul>
+<?php if (count($results) === 0): ?>
+<p>No results found.</p>
+<?php else: ?>
+  <table>
+    <thead>
+      <tr><th>Name</th><th>Continent</th><th>Independence</th><th>Head of State</th></tr>
+    </thead>
+    <tbody>
+      <?php foreach ($results as $row): ?>
+        <tr>
+          <td><?= htmlentities($row['name']); ?></td>
+          <td><?= htmlentities($row['continent']); ?></td>
+          <td><?=  htmlentities((string) $row['independence_year']) ?></td>
+          <td><?= htmlentities((string) $row['head_of_state']) ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+  </table>
+  <?php endif; ?>
+  
