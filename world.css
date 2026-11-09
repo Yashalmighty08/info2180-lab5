@@ -1,1 +1,43 @@
 /* Add your own styles */
+body { 
+    font-family: system-ui, sans-serif;
+    max-width: 40rem; 
+    margin: 2rem auto; 
+    padding: 0 1rem;
+    background: linear-gradient(to bottom, #e6b422, #ded754, #c0c0c0);
+    background-attachment: fixed;
+}
+
+#result table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 24px;
+}
+#result th, #result td {
+    border: 1px solid #e2e8f0;
+    padding: 8px 12px;
+    text-align: left;
+}
+#result th {
+    background: greenyellow;
+}
+#result tbody tr:nth-child(even) {
+    background:lightcoral;
+}
+#result tbody tr:nth-child(odd) {
+    background: lightblue;
+}
+header h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+.logo {
+    height: 48px;
+    width: 48px;
+    object-fit: cover;
+    border-radius: 50%;
+    transform: scale(1.15);
+    mix-blend-mode: multiply;
+}
